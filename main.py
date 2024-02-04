@@ -8,6 +8,7 @@ from prefect import task,flow
 
 @task
 def extract():
+    
     #Set the base URL for CoinGecko API
     base_url = "https://api.coingecko.com/api/v3"
 
@@ -70,7 +71,7 @@ def transform(data_trending_coins):
 
     # we need a date column, we'll delete the former table in our database 
     today = pd.to_datetime('today')
-    df[today] = today
+    df['today'] = today
     print('transformed')
     return df
 
@@ -91,7 +92,7 @@ def load(dataframe):
     #Create a SQLalchemy engine for connecting to database
         engine = create_engine(f'postgresql+psycopg2://{connection_params["user"]}:{connection_params["password"]}@{connection_params["host"]}:{connection_params["port"]}/{connection_params["database"]}')
     #Append the dataframe contents to the existing table and it'll create it if it's not there.
-        dataframe.to_sql('trending_coins' , engine, if_exists = 'append', index = False)
+        dataframe.to_sql('top_trending_coins' , engine, if_exists = 'append', index = False)
 
         print('Database Successfully updated')
 
@@ -106,11 +107,11 @@ def load(dataframe):
 @flow
 def trending_coins_flow():
     extract_data = extract()
-    transform_data = transform.map(extract_data) #pass the extract_data to transform with .map
-    load_data = load.map(transform_data)
+    transform_data = transform(extract_data) #pass the extract_data to transform with .map
+    load_data = load(transform_data)
 
-
-if __name__ == "__main__":
-    trending_coins_flow.serve(name = 'trending_coins_flow', interval = 3600)
+trending_coins_flow()
+# if __name__ == "__main__":
+#     trending_coins_flow.serve(name = 'trending_coins_flow', interval = 3600)
 
 # we need to start the prefect server first
