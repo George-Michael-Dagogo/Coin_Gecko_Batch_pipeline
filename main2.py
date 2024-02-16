@@ -9,7 +9,7 @@ os.system('python main.py > output.txt')
 
 
 email_sender = 'georgemichaeldagogo@gmail.com'
-email_password = os.environ('EMAIL_KEY')
+email_password = os.environ['EMAIL_KEY']
 email_receiver = ['georgemichaeldagogomaynard@gmail.com','kedeisha45@gmail.com']
 
 
