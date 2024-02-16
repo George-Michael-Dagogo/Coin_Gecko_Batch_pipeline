@@ -3,9 +3,10 @@ import pandas as pd
 from forex_python.converter import CurrencyRates
 import psycopg2
 from sqlalchemy import create_engine
+from prefect import task, flow
 
 
-
+@task(retries=2, retry_delay_seconds=10)
 def extract():
     base_url = "https://api.coingecko.com/api/v3/"
     trending_coins_enpoint = "coins/markets"
@@ -24,6 +25,7 @@ def extract():
     return data_trending_coins
 
 
+@task(retries=2, retry_delay_seconds=10)
 def transform(data):
     df = pd.DataFrame(data)
     df = df.iloc[:,list(range(9)) + [-1]]
@@ -47,6 +49,7 @@ def transform(data):
     return df
 
 
+@task(retries=2, retry_delay_seconds=10)
 def loading(dataframe):
     try:
         
@@ -78,10 +81,11 @@ def loading(dataframe):
         if engine:
             engine.dispose()
 
-
+@flow
 def the_flow():
     data = extract()
     dataframe = transform(data)
     loading(dataframe)
 
-the_flow()
+if __name__ == "__main__":
+    the_flow()
