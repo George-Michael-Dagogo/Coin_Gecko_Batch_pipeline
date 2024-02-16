@@ -12,6 +12,7 @@ email_sender = 'georgemichaeldagogo@gmail.com'
 email_password = os.environ['EMAIL_KEY']
 email_receiver = ['georgemichaeldagogomaynard@gmail.com','kedeisha45@gmail.com']
 
+file1 = open("output.txt", "r")
 
 # Set the subject and body of the email
 subject = f'Pipeline update at {datetime.now()}'
