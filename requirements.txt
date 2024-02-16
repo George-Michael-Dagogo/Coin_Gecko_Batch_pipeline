@@ -2,6 +2,5 @@ forex_python==1.8
 pandas==2.2.0
 prefect==2.14.16
 psycopg2==2.9.9
-python-dotenv==1.0.1
 Requests==2.31.0
 SQLAlchemy==2.0.25

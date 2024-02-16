@@ -1,5 +1,0 @@
-extracted successfully
-transformed successfully
-An error occurred: (psycopg2.OperationalError) could not translate host name "testtech.postgres.database.azure.com" to address: Name or service not known
-
-(Background on this error at: https://sqlalche.me/e/20/e3q8)

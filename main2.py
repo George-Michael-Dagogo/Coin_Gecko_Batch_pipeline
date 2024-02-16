@@ -3,15 +3,13 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 from datetime import datetime
-from dotenv import load_dotenv
 
-#os.system('python main.py > output.txt')
 
-def configure():
-    load_dotenv()
+os.system('python main.py > output.txt')
+
 
 email_sender = 'georgemichaeldagogo@gmail.com'
-email_password = os.environ.get('api_key')
+email_password = os.environ('EMAIL_KEY')
 email_receiver = ['georgemichaeldagogomaynard@gmail.com','kedeisha45@gmail.com']
 
 
@@ -34,3 +32,6 @@ with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
     smtp.sendmail(email_sender, email_receiver, em.as_string())
 
 file1.close()
+
+if os.path.exists("output.txt"):
+    os.remove('output.txt')
