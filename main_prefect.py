@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from forex_python.converter import CurrencyRates
+from currency_converter import CurrencyConverter
 import psycopg2
 from sqlalchemy import create_engine
 from prefect import task, flow

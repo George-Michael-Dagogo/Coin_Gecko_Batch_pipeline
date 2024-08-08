@@ -1,4 +1,4 @@
-forex_python==1.8
+currencyconverter==0.17.28
 pandas==2.2.0
 prefect==2.14.16
 psycopg2==2.9.9
